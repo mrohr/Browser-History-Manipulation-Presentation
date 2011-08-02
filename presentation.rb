@@ -16,7 +16,7 @@ get '/presentation/:slide' do |slidenum|
   puts "slide number is #{slidenum}"
   slide = "slides/#{slidenum}"
   puts "slide is #{slide}"
-  haml( :"#{slide}", {:layout => :'layouts/default'})
+  haml( :"#{slide}", {:layout => :'layouts/presentation'})
 end
 
 get '/render_slide/:slide' do |slidenum|

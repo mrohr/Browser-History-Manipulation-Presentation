@@ -1,6 +1,7 @@
 !!!
 %html
   =haml :"layouts/partials/_head", :layout => false
+  %script{:type => "text/javascript", :src => "/js/presentation.js"}
   %body
 
     #wrap
@@ -9,6 +10,10 @@
         #hd
           %h1 History Manipulation
         #bd
-          #content
+          #prev-icon
+            .ui-icon.ui-icon-triangle-1-w
+          #slide-container
             =yield
+          #next-icon
+            .ui-icon.ui-icon-triangle-1-e
         #ft

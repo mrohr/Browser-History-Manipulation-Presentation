@@ -23,68 +23,45 @@ $(function(){
       newSlidenum = slidenum +1;
       console.log('slidenum is ' + slidenum);
       history.pushState({ slide: newSlidenum }, '', '/presentation/' + newSlidenum)
-      slideRight();
+      animateSlide('left');
     }else{
       warningFlash($(this));
     }
   });
-
-  function slideLeft(){
-    if(!$('#first-slide-marker').exists()){
-      var slidenum = $('.slide').attr('slide_count');
+  function animateSlide(direction){
+    var slidenum = $('.slide').attr('slide_count');
+    if(direction == 'left'){
+      slidenum = parseInt(slidenum) +1;
+    }else if(direction == 'right'){
       slidenum = parseInt(slidenum) -1;
-      $.get('/render_slide/' + slidenum, function(data){
-        $('#slide-container').append(data);
-        oldSlide = $('.slide').first();
-        newSlide = $('.slide').last();
-        newSlide.hide();
-        newSlide.css('right','700px');
-        newSlide.show();
-        oldSlide.animate({
-          right: -700
-        }, {
-          duration: 500,
-          step: function(now){
-            newSlide.css( "right", 700 + now );
-          },
-          complete: function(){
-            oldSlide.remove();
-            newSlide.attr('style','');
-          }
-        });
-
-      });
+    }else{
+      return;
     }
+    $.get('/render_slide/' + slidenum, function(data){
+      $('#slide-container').append(data);
+      oldSlide = $('.slide').first();
+      newSlide = $('.slide').last();
+      newSlide.hide();
+      newSlide.css(direction,'700px');
+      newSlide.css('top','-100%');
+      newSlide.show();
+      animation = new Object();
+      animation[direction] = -700;
+      oldSlide.animate(animation,
+      {
+        duration: 500,
+        step: function(now){
+          newSlide.css( direction, 700 + now);
+        },
+        complete: function(){
+          oldSlide.remove();
+          newSlide.attr('style','');
+        }
+      });
+    });
   }
 
-  function slideRight(){
-    if(!$('#last-slide-marker').exists()){
-      var slidenum = getSlidenum();
-      var newSlidenum = slidenum +1;
-      $.get('/render_slide/'+ newSlidenum, function(data){
-        $('#slide-container').append(data);
-        oldSlide = $('.slide').first();
-        newSlide = $('.slide').last();
-        newSlide.hide();
-        newSlide.css('left','700px');
-        newSlide.css('top', '-100%');
-        newSlide.show();
-        oldSlide.animate({
-          left: -700
-        }, {
-          duration: 500,
-          step: function(now){
-            newSlide.css( "left", 700 + now );
-          },
-          complete: function(){
-            oldSlide.remove();
-            newSlide.attr('style', '');
-          }
-        });
-      });
-    }
-  }
-
+  
   function handlePopState(event){
     if(ignored){
       var slidenum = getSlidenum();
@@ -93,9 +70,9 @@ $(function(){
       var nextSlidenum = event.state.slide;
       console.log('slidenum = ' + slidenum + ', nextSlidenum = ' + nextSlidenum);
       if(nextSlidenum > slidenum){
-        slideRight();
+        animateSlide('left');
       }else if(nextSlidenum < slidenum){
-        slideLeft();
+        animateSlide('right');
       }
     }else{
       ignored = true;
