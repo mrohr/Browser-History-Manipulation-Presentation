@@ -1,0 +1,3 @@
+My 2011 Intern Presentation @ Near Infinity.  A presentation/demo on the HTML5 History API
+
+Run the Sinatra app with "ruby -rubygems presentation.rb"  Presentation will be running at localhost:4567
