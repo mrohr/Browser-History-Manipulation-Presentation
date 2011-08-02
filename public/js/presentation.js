@@ -35,6 +35,17 @@ $(function(){
     }
   });
 
+  $(document).keydown(function(e){
+    if (e.keyCode == 37) { 
+      $('#prev-icon').click(); 
+      return false;
+    }else if(e.keyCode == 39){
+      $('#next-icon').click();
+      return false;
+    }
+  });
+  
+
   $('.extendable').live('click',function(){
     $(this).next().toggle(500);
   });
