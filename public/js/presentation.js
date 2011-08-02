@@ -1,13 +1,19 @@
 $(function(){
   jQuery.fn.exists = function(){return jQuery(this).length>0;}
-  window.onpopstate = handlePopState;
-  history.replaceState({ slide: getSlidenum() }, '', '/presentation/' + getSlidenum());
+  if(typeof(history) != 'undefined'){
+    window.onpopstate = handlePopState;
+    history.replaceState({ slide: getSlidenum() }, '', '/presentation/' + getSlidenum());
+  }
   
   $('#prev-icon').click(function(){
     if(!$('#first-slide-marker').exists()){
       confirmFlash($(this));
-      console.log('back');
+      if(typeof(history) != 'undefined'){
       window.history.back();
+      }else{
+
+        window.navigate('/presentation/' + getSlidenum() -1);
+      }
     }else{
       warningFlash($(this));
     }
@@ -16,19 +22,23 @@ $(function(){
   $('#next-icon').click(function(){
     if(!$('#last-slide-marker').exists()){
       confirmFlash($(this));
-      console.log('next');
       var slidenum = getSlidenum();
       newSlidenum = slidenum +1;
-      console.log('slidenum is ' + slidenum);
-      history.pushState({ slide: newSlidenum }, '', '/presentation/' + newSlidenum)
-      animateSlide('left');
+      if(typeof(history) != 'undefined'){
+        history.pushState({ slide: newSlidenum }, '', '/presentation/' + newSlidenum)
+        animateSlide('left');
+      }else{
+        window.navigate('/presentation/' + newSlidenum);
+      }
     }else{
       warningFlash($(this));
     }
   });
+
   $('.extendable').live('click',function(){
     $(this).next().toggle(500);
   });
+
   function animateSlide(direction){
     var slidenum = $('.slide').attr('slide_count');
     if(direction == 'left'){
@@ -38,6 +48,7 @@ $(function(){
     }else{
       return;
     }
+
     $.get('/render_slide/' + slidenum, function(data){
       $('#slide-container').append(data);
       oldSlide = $('.slide').first();
@@ -62,16 +73,15 @@ $(function(){
     });
   }
 
-  
   function handlePopState(event){
-      var slidenum = getSlidenum();
-      slidenum = parseInt(slidenum);
-      var nextSlidenum = event.state.slide;
-      if(nextSlidenum > slidenum){
-        animateSlide('left');
-      }else if(nextSlidenum < slidenum){
-        animateSlide('right');
-      }
+    var slidenum = getSlidenum();
+    slidenum = parseInt(slidenum);
+    var nextSlidenum = event.state.slide;
+    if(nextSlidenum > slidenum){
+      animateSlide('left');
+    }else if(nextSlidenum < slidenum){
+      animateSlide('right');
+    }
   }
 
   function getSlidenum(){
@@ -105,11 +115,12 @@ $(function(){
       }
     });
   }
+
 });
+
   function loadCode(snippetName){
     $.get('/snippets/' + snippetName , function(data){
       $('pre.prettyprint').html(data);
       prettyPrint();
     });
-
   }
