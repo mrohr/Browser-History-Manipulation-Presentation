@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'heroku'
-require 'open-uri'
-require 'nokogiri'
 require 'haml'
 require 'sass'
 
