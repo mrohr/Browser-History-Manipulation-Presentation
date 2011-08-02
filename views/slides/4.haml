@@ -1,0 +1,30 @@
+.slide{:slide_count =>"4"}
+  %h1#title history.pushState/history.replaceState
+  #content
+    %code.prettyprint
+      %line history.pushState(state, title, url); history.replaceState(state, title, url);
+
+    %ul
+      %li
+        %h3.extendable state
+        %ul.hidden
+          %li JavascriptObject (JSON)
+          %li Used to store information about the state of this history item
+          %li when a user navigates to a new state in the history stack, a 'popstate' event is fired
+          %li popstate event has this object in the 'state' property
+          %li can store any information about the state of the page that you wani
+      %li
+        %h3.extendable title
+        %ul.hidden
+          %li String
+          %li Currently not used
+          %li from MDC Documentation:
+          %code Passing the empty string here should be safe against future changes to the method. Alternatively, you could pass a short title for the state to which you're moving.
+      %li
+        %h3.extendable url
+        %ul.hidden
+          %li String
+          %li the URL stored by the browser as what page you are visiting, shown in the address bar
+          %li
+            won't actually be called, unless the page is reloaded
+            .warn Because of this, make sure it is valid!

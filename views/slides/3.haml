@@ -1,5 +1,16 @@
 .slide{:slide_count =>"3"}
-  %h1 Last Slide
+  %h1#title How'd They Do It?
   #content
-    All Done!
-  #last-slide-marker
+    %ul
+      %li
+        %a{:href =>"https://github.com/blog/760-the-tree-slider"} Blog Post by the GitHub team on the tree slider
+      %li Uses the new HTML5 History API
+      %li Lets developers edit the history stack
+      %li 
+        3 methods basically do all of the work:
+        %ul
+          %li pushState
+          %li replaceState
+          %li the "popstate" event
+
+

@@ -1,7 +1,5 @@
 $(function(){
-  ignored = false;
   jQuery.fn.exists = function(){return jQuery(this).length>0;}
-  webkitFix();
   window.onpopstate = handlePopState;
   history.replaceState({ slide: getSlidenum() }, '', '/presentation/' + getSlidenum());
   
@@ -27,6 +25,9 @@ $(function(){
     }else{
       warningFlash($(this));
     }
+  });
+  $('.extendable').live('click',function(){
+    $(this).next().toggle(500);
   });
   function animateSlide(direction){
     var slidenum = $('.slide').attr('slide_count');
@@ -63,33 +64,20 @@ $(function(){
 
   
   function handlePopState(event){
-    if(ignored){
       var slidenum = getSlidenum();
       slidenum = parseInt(slidenum);
-      console.log(event.state);
       var nextSlidenum = event.state.slide;
-      console.log('slidenum = ' + slidenum + ', nextSlidenum = ' + nextSlidenum);
       if(nextSlidenum > slidenum){
         animateSlide('left');
       }else if(nextSlidenum < slidenum){
         animateSlide('right');
       }
-    }else{
-      ignored = true;
-    }
-    return false;
   }
 
   function getSlidenum(){
     return  parseInt($('.slide').attr('slide_count'));
   }
 
-  function webkitFix(){
-    if(navigator.userAgent.match('AppleWebKit')){
-      ignored = false;
-    }else ignored = true;
-  }
-  
 
   function warningFlash(element){
     flash(element, '#FFDDDDD');
@@ -117,5 +105,11 @@ $(function(){
       }
     });
   }
-
 });
+  function loadCode(snippetName){
+    $.get('/snippets/' + snippetName , function(data){
+      $('pre.prettyprint').html(data);
+      prettyPrint();
+    });
+
+  }

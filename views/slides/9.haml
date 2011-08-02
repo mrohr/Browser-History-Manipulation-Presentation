@@ -1,0 +1,35 @@
+.slide{:slide_count =>"9"}
+  %h1#title Problems I Ran Into
+  #content
+    %ul
+      %li
+        %h3.extendable First Page History Error
+        .hidden
+          %p When navigating through the history of the slideshow, attempting to return to the first page threw the error:
+          %pre.warn Uncaught TypeError: Cannot read property 'slide' of null
+          %h4 Fix:
+          %p add history.replaceState() on pageload.
+    %ul
+      %li
+        %h3.extendable Browser Compatibility
+        .hidden
+          %table{:style =>"text-align: center;"}
+            %tr
+              %th IE
+              %th Firefox
+              %th Safari
+              %th Chrome
+              %th iOS
+              %th Android
+            %tr
+              %td{:style => "color: red;"}✗
+              %td 4.0+
+              %td 5.0+
+              %td{:style => "color: green;"} ✓
+              %td 4.2+
+              %td 2.2+
+          %h4 Fix:
+          %pre.prettyprint if(history != 'undefined')
+
+
+

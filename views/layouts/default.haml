@@ -6,9 +6,8 @@
     #wrap
       =haml :"layouts/partials/_sidebar", :layout => false
       #main
-        #hd
-          %h1 History Manipulation
+        = haml :"layouts/partials/_header", :layout => false
         #bd
-          #content
+          #slide-container
             =yield
         #ft

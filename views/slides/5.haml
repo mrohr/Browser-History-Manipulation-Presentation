@@ -1,0 +1,15 @@
+.slide{:slide_count =>"5"}
+  %h1#title popstate Event
+  #content
+    %code.prettyprint
+      %line window.onpopstate = functionName;
+
+    %ul
+      %li
+        %h3 functionName
+        %ul
+          %li The name of a function that will handle the popstate event
+          %li has one parameter, the popstate event
+          %li the event has a field 'state', which contains the object set by pushState and replaceState
+      
+
