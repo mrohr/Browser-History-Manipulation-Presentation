@@ -1,18 +1,16 @@
 .slide{:slide_count =>"4"}
-  %h1#title history.pushState/history.replaceState
+  %h1#title history.pushState
   #content
     %code.prettyprint
-      %line history.pushState(state, title, url); history.replaceState(state, title, url);
-
+      %line history.pushState(state, title, url);
     %ul
       %li
         %h3.extendable state
         %ul.hidden
-          %li JavascriptObject (JSON)
-          %li Used to store information about the state of this history item
-          %li when a user navigates to a new state in the history stack, a 'popstate' event is fired
-          %li popstate event has this object in the 'state' property
-          %li can store any information about the state of the page that you wani
+          %li Javascript Object (JSON)
+          %li store information about the state of this page
+          %li stored as a field in the popstate event
+          %li can store anything, 640k size limit
       %li
         %h3.extendable title
         %ul.hidden

@@ -30,7 +30,8 @@ a:hover
 
 h1,h2,h3,h4,h5,h6
   :color $h-color
-
+li
+  margin: 25px 0 25px
 
 
 #wrap
@@ -111,7 +112,7 @@ h1,h2,h3,h4,h5,h6
     :width 660px
     :height 100%
     :margin 0 20px 0
-    :font-size 150%
+    :font-size 225%
     :position relative
     #title
       :text-align center
@@ -145,6 +146,8 @@ h1,h2,h3,h4,h5,h6
   :background-color #FFF0F0
   :padding 5px
   :border 1px solid #bbb
-.extendable:hover
-  :color #00C
-  :cursor pointer
+.extendable
+  :text-decoration underline
+  &:hover
+    :color #00C
+    :cursor pointer
