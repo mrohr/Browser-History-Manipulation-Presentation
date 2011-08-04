@@ -12,3 +12,7 @@ $('#next-icon').click(function(){
     warningFlash($(this));
   }
 });
+
+function getSlidenum(){
+  return  parseInt($('.slide').attr('slide_count'));
+}

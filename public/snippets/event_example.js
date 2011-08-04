@@ -8,7 +8,3 @@ function handlePopState(event){
       animateSlide('right');
     }
 }
-
-function getSlidenum(){
-  return  parseInt($('.slide').attr('slide_count'));
-}
